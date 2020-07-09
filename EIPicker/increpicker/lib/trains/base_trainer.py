@@ -110,7 +110,7 @@ class BaseTrainer(object):
       if opt.test:
         self.save_result(output, batch, results)
       del output, loss, loss_stats
-      if task!=-1 and phase == 'train' and ((iter_id + 1) % 5 == 0):
+      if task!=-1 and phase == 'train' and ((iter_id + 1) % 3 == 0):
         for iter, ba in enumerate(old_loader):
           for k1 in ba:
             if k1 != 'meta':
@@ -121,7 +121,7 @@ class BaseTrainer(object):
           self.optimizer.zero_grad()
           loss.backward()
           self.optimizer.step()
-          print(loss)
+          #print(loss)
           del output, loss, loss_stats
     bar.finish()
     ret = {k: v.avg for k, v in avg_loss_stats.items()}
