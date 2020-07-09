@@ -9,12 +9,11 @@ $python main.py
                             （目前只能存放png格式的图片和json格式的标注）
 	    --exp_id 用来保存训好模型的文件夹的名字
 	    --lr 学习率（第一个任务为1e-4，后续的增量任务为1e-5）
-                    --load_model 待加载的已训练好的模型（第一个任务为空，后续任务加载前一个任务训练好的模型）
+            --load_model 待加载的已训练好的模型（第一个任务为空，后续任务加载前一个任务训练好的模型）
 根据需要可以自由设置的项：--gpus GPU的编号，可以为多个
-                                          --batch_size 对于单个GPU推荐为4
+                         --batch_size 对于单个GPU推荐为4
 使用样例：
-对于第一个任务：python main.py --data ./dataset1 --exp_id model1
-                          --lr 1e-4 (--batch_size 4) (--gpus 0)
+对于第一个任务：python main.py --data ./dataset1 --exp_id model1 --lr 1e-4 (--batch_size 4) (--gpus 0)
 此时，模型会被保存在./model1目录下，使用其中的model_last.pth进行粒子挑选和后续的增量训练
 
 
@@ -35,9 +34,9 @@ python exemplar_create.py --data ./dataset1 --sample_number 500
 4、挑选：
 $python pick.py
 必设置的项：--data 带挑选图片的路径,路径下有png格式的图片
-                    --particle_size 待挑选的粒子的大小
-                    --load_model 待加载的已训练好的模型
-                    --vis_thresh 设置挑选阈值，只有大于阈值的粒子会被挑选出来
+            --particle_size 待挑选的粒子的大小
+            --load_model 待加载的已训练好的模型
+            --vis_thresh 设置挑选阈值，只有大于阈值的粒子会被挑选出来
 使用样例：
 python pick.py --data ./dataset/images --particle_size 6 --load_model ./model1/model_last.pth --vis_thresh 0.3
 此时，挑选结果会被保存在./selection_results目录下
@@ -45,10 +44,10 @@ python pick.py --data ./dataset/images --particle_size 6 --load_model ./model1/m
 5、测试：
 $python test.py
 必设置的项：--load_model 加载已训练好的模型
-                    --data 待测试数据集,路径下有用于存放图片的images文件夹和用于存放标注的annotations文件夹
-                    --particle_size 待挑选的粒子的大小
-                    --trainval 表明是在测试集上，不加表明在验证集上
+            --data 待测试数据集,路径下有用于存放图片的images文件夹和用于存放标注的annotations文件夹
+            --particle_size 待挑选的粒子的大小
+            --trainval 表明是在测试集上，不加表明在验证集上
 根据需要可以自由设置的项：--flip_test 测试集增强镜像反转
-                                          --nms 非极大值抑制
+                         --nms 非极大值抑制
 使用样例：
 python test.py --data ./dataset --load_model ./model1/model_last.pth --particle_size 6 --trainval --flip_test --nms
